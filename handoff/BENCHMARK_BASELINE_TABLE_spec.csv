@@ -1,0 +1,32 @@
+﻿eval_tier,benchmark_group,benchmark,subcategory,subcategory_value,n_instances,metric,protocol,data_ready,eval_ready,kimi_2_7_code,qwen3_5_26b,gpt_5_5,claude_4_8,codeact_mistral_7b,codeact_llama2_7b,gpt4_0613_ref,grpo,dapo,gspo,didpo,notes
+light,coding,light_eval,overall,all,128,pass@1,multi-turn self-repair pass@1,yes,yes,,,,,,,,,,,,APPS 64 + HumanEval 32 + MBPP 32
+light,coding,apps,slice,0:64,64,pass@1,multi-turn self-repair pass@1,yes,yes,,,,,,,,,,,,
+light,coding,humaneval,slice,0:32,32,pass@1,multi-turn self-repair pass@1,yes,yes,,,,,,,,,,,,
+light,coding,mbpp,slice,0:32,32,pass@1,multi-turn self-repair pass@1,yes,yes,,,,,,,,,,,,
+full,coding,apps,overall,all,5000,pass@1,multi-turn self-repair pass@1,yes,yes,,,,,,,,,,,,
+full,coding,apps,difficulty,introductory,1000,pass@1,multi-turn self-repair pass@1,yes,yes,,,,,,,,,,,,
+full,coding,apps,difficulty,interview,3000,pass@1,multi-turn self-repair pass@1,yes,yes,,,,,,,,,,,,
+full,coding,apps,difficulty,competition,1000,pass@1,multi-turn self-repair pass@1,yes,yes,,,,,,,,,,,,
+full,coding,humaneval,overall,all,164,pass@1,multi-turn self-repair pass@1,yes,yes,,,,,34.7,18.1,67.0,,,,,‡ CodeAct/GPT-4: single-turn HumanEval (ICML 2024 Tab.5); not multi-turn repair
+full,coding,mbpp,overall,all,257,pass@1,multi-turn self-repair pass@1,yes,yes,,,,,,,,,,,,
+full,coding,livecodebench,overall,all,131,pass@1,multi-turn self-repair pass@1,yes,yes,,,,,,,,,,,,LCB_MIN_DATE>=2025-02-01
+full,coding,livecodebench,difficulty,easy,31,pass@1,multi-turn self-repair pass@1,yes,yes,,,,,,,,,,,,subset after LCB_MIN_DATE; eval logs success_rate_lcb_easy
+full,coding,livecodebench,difficulty,medium,39,pass@1,multi-turn self-repair pass@1,yes,yes,,,,,,,,,,,,subset after LCB_MIN_DATE; eval logs success_rate_lcb_medium
+full,coding,livecodebench,difficulty,hard,61,pass@1,multi-turn self-repair pass@1,yes,yes,,,,,,,,,,,,subset after LCB_MIN_DATE; eval logs success_rate_lcb_hard
+full,coding,usaco,tier,bronze,123,pass@1,multi-turn self-repair pass@1,yes,yes,,,,,,,,,,,,
+full,coding,usaco,tier,silver,100,pass@1,multi-turn self-repair pass@1,yes,yes,,,,,,,,,,,,
+full,coding,usaco,tier,gold,63,pass@1,multi-turn self-repair pass@1,yes,yes,,,,,,,,,,,,
+full,coding,usaco,tier,platinum,21,pass@1,multi-turn self-repair pass@1,yes,yes,,,,,,,,,,,,
+full,coding,usaco,overall,all,307,pass@1,multi-turn self-repair pass@1,yes,yes,,,,,,,,,,,,
+full,coding,ojbench,overall,python,232,pass@1,multi-turn self-repair pass@1,yes,partial,,,,,,,,,,,,232 prompts total
+full,coding,ojbench,backend,selfrepair_io,159,pass@1,multi-turn self-repair pass@1,yes,yes,,,,,,,,,,,,NOI tests.zip; † paper column uses this subset
+full,coding,ojbench,backend,ojbench_judge,73,pass@1,OJBench DMOJ judge,yes,no,,,,,,,,,,,,ICPC interactive
+full,coding,ojbench,difficulty,easy,36,pass@1,multi-turn self-repair pass@1,yes,partial,,,,,,,,,,,,
+full,coding,ojbench,difficulty,hard,117,pass@1,multi-turn self-repair pass@1,yes,partial,,,,,,,,,,,,
+full,coding,ojbench,difficulty,medium,79,pass@1,multi-turn self-repair pass@1,yes,partial,,,,,,,,,,,,
+full,coding,ojbench,platform,NOI,159,pass@1,multi-turn self-repair pass@1,yes,partial,,,,,,,,,,,,
+full,coding,ojbench,platform,icpc,73,pass@1,multi-turn self-repair pass@1,yes,partial,,,,,,,,,,,,
+full,coding,icpc,overall,io_subset,106,pass@1,multi-turn self-repair pass@1,yes,yes,,,,,,,,,,,,118 total; 12 SPJ skipped
+full,coding,icpc,skipped,spj,12,pass@1,multi-turn self-repair pass@1,yes,no,,,,,,,,,,,,
+full,swe,swe_bench_lite,overall,all,300,resolve%,Docker r2e_gym resolve%,yes,yes,,,,,,,,,,,,
+appendix,swe,swe_bench_verified,slice,0:100,100,resolve%,Docker r2e_gym resolve%,yes,yes,,,,,,,,,,,,

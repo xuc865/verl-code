@@ -1,0 +1,21 @@
+﻿Table 1 — Full eval (coding + SWE); pass@1 / resolve%,,,,,,,,,,,,,,,,,,,
+Metric: multi-turn self-repair pass@1; SWE: Docker r2e_gym resolve%; empty=—,,,,,,,,,,,,,,,,,,,
+,APPS,APPS,APPS,APPS,HumanEval,MBPP,LiveCodeBench,LiveCodeBench,LiveCodeBench,LiveCodeBench,USACO,USACO,USACO,USACO,USACO,OJBench,ICPC,SWE-Lite,SWE-Verified
+Method,all,intro,interview,competition,all,all,all,easy,medium,hard,all,bronze,silver,gold,platinum,all†,io,all,slice100
+#N,5000,1000,3000,1000,164,257,131,31,39,61,307,123,100,63,21,159,106,300,100
+Kimi-2.7-Code,—,—,—,—,—,—,—,—,—,—,—,—,—,—,—,—,—,—,—
+Qwen3.5-26B,—,—,—,—,—,—,—,—,—,—,—,—,—,—,—,—,—,—,—
+GPT-5.5,—,—,—,—,—,—,—,—,—,—,—,—,—,—,—,—,—,—,—
+Claude-4.8,—,—,—,—,—,—,—,—,—,—,—,—,—,—,—,—,—,—,—
+CodeAct-Mistral-7B‡,—,—,—,—,34.7,—,—,—,—,—,—,—,—,—,—,—,—,—,—
+CodeAct-Llama2-7B‡,—,—,—,—,18.1,—,—,—,—,—,—,—,—,—,—,—,—,—,—
+GPT-4-0613‡,—,—,—,—,67.0,—,—,—,—,—,—,—,—,—,—,—,—,—,—
+GRPO,—,—,—,—,—,—,—,—,—,—,—,—,—,—,—,—,—,—,—
+DAPO,—,—,—,—,—,—,—,—,—,—,—,—,—,—,—,—,—,—,—
+GSPO,—,—,—,—,—,—,—,—,—,—,—,—,—,—,—,—,—,—,—
+DIDPO (ours),—,—,—,—,—,—,—,—,—,—,—,—,—,—,—,—,—,—,—
+
+Notes
+†,OJBench column = 159 NOI problems (selfrepair_io); 73 ICPC interactive need official judge
+‡,CodeAct / GPT-4 refs are single-turn HumanEval only (ICML 2024 Tab.5)
+—,To fill: run MODE=eval CHECKPOINT=... bash one.sh
