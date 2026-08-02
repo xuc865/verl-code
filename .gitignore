@@ -8,6 +8,8 @@
 **/*.tar.gz
 **/playground
 **/wandb
+wandb/
+swanlog/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -196,4 +198,3 @@ __pycache__/
 .ruff_cache/
 .pytest_cache/
 tmp_output_*.txt
-

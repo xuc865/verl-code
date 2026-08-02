@@ -1,5 +1,9 @@
 <h1 align="center">verl-code</h1>
 
+<p align="center">
+  <img src="docs/didpo.png" alt="DiDPO" width="520">
+</p>
+
 <h3 align="center">
 <b>Reinforcement Learning for Multi-turn Coding Agents</b>
 <br>
