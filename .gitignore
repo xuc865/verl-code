@@ -178,6 +178,7 @@ libpod/
 **/figs/
 **/figure/
 *.png
+!docs/*.png
 *.svg
 *.jpg
 *.jpeg
