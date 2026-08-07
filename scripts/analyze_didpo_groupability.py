@@ -143,7 +143,7 @@ def analyze_cross_rollout_group(
     phi_s0: float = 8.0,
     psi_count_ref: float = 8.0,
 ) -> Dict[str, Any]:
-    """One SWE-bench instance with G rollouts → DIDPO grouping stats."""
+    """One coding instance with G rollouts → DIDPO grouping stats."""
     rows_snips: List[List[Dict[str, Any]]] = []
     within_stats: List[Dict[str, Any]] = []
     for responses in rollouts:

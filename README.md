@@ -57,7 +57,7 @@ aligned edited snippets across rollouts.
 | Category | Support |
 |---|---|
 | Interaction | ✅ Multi-turn coding-agent training |
-| Algorithms | ✅ GRPO / GSPO / DAPO / **DiDPO** |
+| Algorithms | ✅ GRPO / GiGPO / GSPO / DAPO / **DiDPO** |
 | SFT | ✅ Multi-turn SFT from trajectory data |
 | Models | ✅ Qwen2.5-Coder-7B / Qwen3.5-4B |
 | Benchmarks | ✅ `apps_train_coderl` and related coding presets |

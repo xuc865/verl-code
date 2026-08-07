@@ -9,7 +9,7 @@ fi
 export VLLM_ATTENTION_BACKEND=XFORMERS
 
 # =========================================================================== #
-# GRPO -- canonical Group Relative Policy Optimization on SWE-bench.
+# GRPO -- canonical Group Relative Policy Optimization for multi-turn coding agents.
 #   adv_estimator = grpo  (group-mean baseline, std-normalized advantage)
 #   policy loss   = vanilla PPO-clip (symmetric clip_ratio)
 #   loss agg      = token-mean
@@ -17,13 +17,13 @@ export VLLM_ATTENTION_BACKEND=XFORMERS
 # ../gspo_trainer (GSPO), ../dapo_trainer (DAPO), ../didpo_trainer (DIDPO).
 # =========================================================================== #
 
-num_cpus_per_env_worker=1.0   # CPU per SWE-bench env worker (raise for docker/r2e_gym)
+num_cpus_per_env_worker=1.0   # CPU per coding-env worker (raise for docker/r2e_gym)
 
 # Launchers (one.sh / launch_grpo_*) export these so prepare parquet row count
 # matches Hydra data.train_batch_size / env.rollout.n.
 train_data_size=${TRAIN_BATCH_SIZE:-8}
 val_data_size=${VAL_DATA_SIZE:-${TRAIN_BATCH_SIZE:-8}}
-group_size=${GROUP_SIZE:-8}                  # rollouts per SWE-bench instance
+group_size=${GROUP_SIZE:-8}                  # rollouts per coding instance
 
 # One-line benchmark switch (resolves dataset + backend automatically):
 #   local              -> synthetic CPU self-repair bed (no Docker, runnable now)

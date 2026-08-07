@@ -13,7 +13,7 @@
 # limitations under the License.
 
 """
-Action projection for the SWE-bench coding environment.
+Action projection for the multi-turn coding environment.
 
 The agent's textual response is parsed into a *structured action*. We support a
 small, explicit command set so the scaffold stays simple and the generated

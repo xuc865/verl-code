@@ -3,7 +3,7 @@ ENGINE=${1:-vllm}
 export VLLM_ATTENTION_BACKEND=XFORMERS
 
 # =========================================================================== #
-# GSPO -- Group Sequence Policy Optimization on SWE-bench.
+# GSPO -- Group Sequence Policy Optimization for multi-turn coding agents.
 #   adv_estimator = grpo  (group baseline shared with GRPO)
 #   policy loss   = gspo  (sequence-level importance ratio; see
 #                          compute_policy_loss_gspo, https://arxiv.org/pdf/2507.18071)

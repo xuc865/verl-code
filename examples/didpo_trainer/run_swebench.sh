@@ -9,14 +9,15 @@ fi
 export VLLM_ATTENTION_BACKEND=XFORMERS
 
 # =========================================================================== #
-# DiDPO -- Diff-in-Diff Policy Optimization on SWE-bench / CodeRL.
+# DiDPO -- Diff-in-Diff Policy Optimization for multi-turn coding agents.
 #   adv_estimator = didpo  (GRPO-style A^E + λ · grouped sub-diff A^D)
 #   policy loss   = vanilla PPO-clip (same as GRPO path)
 #   loss agg      = token-mean
 # Hydra overrides from launch_didpo_* scripts are appended via $@.
 # =========================================================================== #
 
-num_cpus_per_env_worker=1.0   # CPU per SWE-bench env worker (raise for docker/r2e_gym)
+num_cpus_per_env_worker=1.0   # CPU per coding-env worker (raise for docker/r2e_gym)
+
 
 # Launchers export these so prepare parquet row count matches Hydra batch / n.
 train_data_size=${TRAIN_BATCH_SIZE:-8}

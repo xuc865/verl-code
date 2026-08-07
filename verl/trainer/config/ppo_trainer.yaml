@@ -319,18 +319,19 @@ ray_init:
 
 
 env:
-  env_name: swebench            # DIDPO coding benchmark (deprecates alfworld/webshop/etc.)
+  env_name: swebench            # coding env module name (historical); main path is CodeRL-style coding
   seed: 0
-  max_steps: 30                 # max agent-environment turns per SWE-bench episode
+  max_steps: 30                 # max agent-environment turns per coding episode
   history_length: 3
   resources_per_worker: # resources for each env worker
     num_cpus: 1.0
     num_gpus: 0
   rollout:
-    n: 1 # the group number of envs / rollouts per SWE-bench instance (for GRPO, GiGPO and DIDPO).
+    n: 1 # rollouts per coding instance (for GRPO, GiGPO and DIDPO).
   swebench:
     # One-line benchmark switch. Presets resolve dataset_name/split/backend:
     #   local              -> synthetic CPU self-repair bed (no Docker)      [default]
+    #   apps_train_coderl  -> CodeRL APPS train (common RL recipe)
     #   swe_bench_verified -> R2E-Gym/SWE-Bench-Verified  (r2e_gym + Docker)
     #   swe_bench_lite     -> R2E-Gym/SWE-Bench-Lite      (r2e_gym + Docker)
     #   r2e_gym_subset     -> R2E-Gym/R2E-Gym-Subset      (r2e_gym + Docker)

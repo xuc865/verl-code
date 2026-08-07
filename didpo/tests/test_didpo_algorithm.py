@@ -33,7 +33,7 @@ hand-constructed rollouts with known structure, and checks that:
 
 Run with plain Python (no pytest needed):
 
-    cd code-swe && python3 didpo/tests/test_didpo_algorithm.py
+    cd verl-code && python3 didpo/tests/test_didpo_algorithm.py
 
 The torch-free parts (1-5) run anywhere; part (6) auto-skips if torch is not
 installed and runs the real tensor path where it is.
@@ -194,7 +194,7 @@ def _rows_for_grouping():
 def test_cross_rollout_grouping():
     print("[4] cross-rollout functional grouping ...")
     rows = _rows_for_grouping()
-    index = np.zeros(len(rows), dtype=int)  # all the same SWE-bench instance
+    index = np.zeros(len(rows), dtype=int)  # all the same coding instance
 
     # Exact (sim_thresh=1.0) clustering for a deterministic assertion.
     gmap = build_snippet_groups(rows, index, LEVEL_FUNCTION, sim_thresh=1.0)

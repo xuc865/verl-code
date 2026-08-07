@@ -1,17 +1,18 @@
-# 远端 GPU 机器准备清单（code-swe / verl-agent + DIDPO）
+# 远端 GPU 机器准备清单（verl-code / coding agents + DIDPO）
 
-> 目的：在一台带 GPU + Docker 的机器上，把这个仓库从零跑通——先用零下载的 `local`
-> 自修复床冒烟，再切到真实 SWE-bench 集（R2E-Gym executor）做完整 RL 训练。
+> 目的：在一台带 GPU（+ 可选 Docker）的机器上，把这个仓库从零跑通——先用零下载的
+> `local` 自修复床冒烟，再切到 CodeRL / APPS 等 coding 训练集做完整 RL。
 > 本清单中的每个事实都已对照仓库源码核实，括号里标了出处文件。
 
 ---
 
 ## 0. 一句话背景
 
-仓库是 **verl-agent 的 fork**，在其上加了 **DIDPO**（snippet 级分组优势）算法，环境是
-**SWE-bench coding agent**（gym 风格、Ray 向量化）。训练入口是 `verl.trainer.main_ppo`，
-算法/数据/环境全部用 hydra 命令行覆盖。已经准备好 5 个算法的可执行入口脚本
-（GRPO / GRPO++ / GSPO / DAPO / DIDPO），默认 `benchmark=local`。
+仓库是 **verl-agent 的 fork**，面向 **multi-turn coding agents**，并加入 **DIDPO**
+（snippet 级分组优势）等算法。环境为 gym 风格、Ray 向量化的 coding 交互。
+训练入口是 `verl.trainer.main_ppo`，算法/数据/环境全部用 hydra 命令行覆盖。
+已准备好多个算法入口（GRPO / GRPO++ / GSPO / DAPO / DIDPO / GiGPO），默认
+`benchmark=local`。
 
 ---
 
@@ -22,7 +23,7 @@
 | GPU 数量 | **≥ 2 张**（脚本默认 `trainer.n_gpus_per_node=2` + `tensor_model_parallel_size=2`） | `examples/didpo_trainer/run_swebench.sh` L53/L87 |
 | 单卡显存 | 跑 `Qwen2.5-Coder-7B-Instruct` + vLLM，建议 **≥ 40GB/卡**（A100 40G / A800 / H800 等）；`gpu_memory_utilization=0.6` 留了余量 | 同上 L41/L55 |
 | 内存 | ≥ 64GB（Ray + datasets + 多 env worker） | — |
-| 磁盘 | **≥ 200GB 空闲**：HF 数据集 + 模型权重(~15GB) + **每个 SWE-bench 实例一个 GB 级 Docker 镜像** | `_BENCHMARK_PRESETS`（envs.py L415-424） |
+| 磁盘 | **≥ 200GB 空闲**（若走 docker/r2e 真集）：HF 数据集 + 模型权重(~15GB) + 每实例 GB 级镜像；纯 CodeRL/local 可少很多 | `_BENCHMARK_PRESETS`（envs.py） |
 | Docker | **必须**有可用 Docker daemon（真集走 `r2e_gym` backend，容器是评测唯一真相源） | envs.py L304-353 |
 
 > ⚠️ 本机（开发用 Mac）没有 Docker，所以真集只能在远端跑。`local` 路径不需要 Docker/GPU 也能跑逻辑，但完整训练 run 必须 GPU。
@@ -32,9 +33,9 @@
 ## 2. 拉取代码
 
 ```bash
-# 把整个 code-swe 目录同步到远端（git 或 rsync 均可）
+# 把整个 verl-code 目录同步到远端（git 或 rsync 均可）
 # 关键子目录：verl/ didpo/ gigpo/ agent_system/ examples/ requirements.txt setup.py pyproject.toml
-cd <远端路径>/code-swe
+cd <远端路径>/verl-code
 ```
 
 需要确保以下文件存在（清单核心交付物，已写好）：
@@ -146,7 +147,7 @@ python3 -c "from datasets import load_dataset; load_dataset('R2E-Gym/SWE-Bench-L
 
 ### 阶段 A：离线单元测试（无需 GPU / Docker，先确认代码完整）
 ```bash
-cd code-swe
+cd verl-code
 for t in test_phase3_benchmark test_r2egym_contract test_selfrepair_env test_didpo_algorithm; do
   echo "=== $t ==="; python3 didpo/tests/$t.py && echo PASS || echo FAIL
 done

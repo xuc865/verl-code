@@ -14,7 +14,7 @@
 
 """Fixed-``instance_id`` DIDPO group evolution tracker.
 
-Locks a small set of **stable** SWE-bench / APPS ``instance_id``s (not ephemeral
+Locks a small set of **stable** coding-task ``instance_id``s (not ephemeral
 rollout ``uid`` UUIDs) and, at every training step those instances appear,
 records DiDPO group stats (count, sizes, previews) for SwanLab + JSONL.
 

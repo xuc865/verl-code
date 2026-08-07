@@ -15,7 +15,7 @@
 Preprocess placeholder rows to parquet for verl-agent.
 
 **NOTE**: We do NOT use Geometry3k content. The Hub dataset is only a size/modality
-scaffold; SWE-bench / APPS problems come from env.swebench at train time.
+scaffold; coding problems come from env.swebench at train time.
 Offline train nodes must not depend on Hugging Face Hub.
 """
 

@@ -17,9 +17,9 @@
 """
 Environment managers.
 
-DIDPO targets coding benchmarks only. The legacy verl-agent environments
+Multi-turn coding agents (GRPO / GiGPO / DiDPO). Legacy verl-agent environments
 (ALFWorld / WebShop / Sokoban / Gym Cards / AppWorld / Search) have been
-deprecated and removed; only the SWE-bench coding environment is supported.
+deprecated and removed from the main path.
 """
 
 from typing import List, Tuple, Dict, Union, Any
@@ -40,18 +40,28 @@ from omegaconf import OmegaConf
 
 
 class SWEBenchEnvironmentManager(EnvironmentManagerBase):
-    """Environment manager for the SWE-bench coding environment (DIDPO).
+    """Environment manager for multi-turn coding agents.
 
     Produces text observations that interleave the task, a short interaction
     history (managed by :class:`SimpleMemory`), and the latest command output.
-    ``anchor`` is unused by DIDPO (grouping is snippet-based, not observation
-    based), so it is left as ``None``.
+
+    GiGPO uses ``anchor`` = post-step workspace code state (no history).
+    DiDPO ignores ``anchor`` and groups on snippets instead.
     """
 
     def __init__(self, envs, projection_f, config):
         self.memory = SimpleMemory()
         self.problem_statements: List[str] = []
         super().__init__(envs, projection_f, config)
+
+    @staticmethod
+    def _anchors_from(obs: List[str], infos: List[Dict]) -> List[Any]:
+        """Prefer env-provided workspace state; fall back to raw obs."""
+        out: List[Any] = []
+        for i, info in enumerate(infos):
+            a = info.get("anchor")
+            out.append(a if a is not None else obs[i])
+        return out
 
     def reset(self, kwargs) -> Tuple[Dict[str, Any], List[Dict]]:
         obs, infos = self.envs.reset()
@@ -60,7 +70,7 @@ class SWEBenchEnvironmentManager(EnvironmentManagerBase):
         observations = {
             "text": self._build_init_obs(obs),
             "image": None,
-            "anchor": None,
+            "anchor": self._anchors_from(obs, infos),
         }
         for i, info in enumerate(infos):
             info["is_action_valid"] = np.array(True)
@@ -77,7 +87,7 @@ class SWEBenchEnvironmentManager(EnvironmentManagerBase):
         observations = {
             "text": self.build_text_obs(next_obs, infos),
             "image": None,
-            "anchor": None,
+            "anchor": self._anchors_from(next_obs, infos),
         }
         for i, info in enumerate(infos):
             info["is_action_valid"] = to_numpy(valids[i])
@@ -135,7 +145,7 @@ class SWEBenchEnvironmentManager(EnvironmentManagerBase):
 
 
 def make_envs(config):
-    """Create train/val environments. DIDPO supports the SWE-bench env only."""
+    """Create train/val coding environments (GRPO / GiGPO / DiDPO)."""
     if not isinstance(config.env.rollout.n, int):
         raise ValueError("config.env.rollout.n should be an integer")
     group_n = config.env.rollout.n if config.env.rollout.n > 0 else 1
@@ -184,4 +194,5 @@ def make_envs(config):
 
     raise ValueError(
         f"Unsupported environment: {config.env.env_name}. "
-        "DIDPO only supports 'swebench'; legacy environments were deprecated.")
+        "Only the coding env (env_name containing 'swebench') is supported; "
+        "legacy environments were deprecated.")

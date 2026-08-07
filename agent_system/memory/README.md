@@ -1,9 +1,9 @@
 ## Memory Manager
 
-`code-swe` lets each rollout step flexibly choose what interaction history to
+`verl-code` lets each rollout step flexibly choose what interaction history to
 include — e.g. recent steps, key events, summaries, or external knowledge —
-rather than always concatenating the full trajectory. In the SWE-bench setting
-this keeps the per-step context bounded even when an episode runs many
+rather than always concatenating the full trajectory. On multi-turn coding
+tasks this keeps the per-step context bounded even when an episode runs many
 bash/edit turns.
 
 We provide a simple memory implementation as a starting point (see

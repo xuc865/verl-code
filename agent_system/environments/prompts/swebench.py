@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# --------------------- SWE-bench / APPS (ReAct-style agent) --------------------- #
+# --------------------- Coding agent (ReAct-style) --------------------- #
 # ReAct (Yao et al., 2022): each step = Thought → Action; env returns Observation.
 # Thought uses <think> (parsed by projection.py). Action is exactly one
 # XML block below. Act may inspect, edit, run tests, or finish — not always edit.

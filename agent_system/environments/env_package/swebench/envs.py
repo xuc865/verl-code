@@ -13,9 +13,10 @@
 # limitations under the License.
 
 """
-SWE-bench coding environment (gym-style, Ray-vectorized) for DIDPO.
+Multi-turn coding environment (gym-style, Ray-vectorized).
 
-Each sub-environment hosts a single SWE-bench instance. The agent issues
+Each sub-environment hosts a single coding instance (CodeRL / APPS-style by
+default; optional repo-level suites via docker/r2e backends). The agent issues
 ``edit`` / ``execute_bash`` / ``finish`` actions; the environment applies them
 to a working copy of the repository, optionally runs the instance's tests, and
 returns a sparse outcome reward (1.0 iff the resolved test set passes).
@@ -30,14 +31,14 @@ the right container) is isolated behind :class:`SWEBenchBackend`:
 - ``LocalStubBackend``  : a dependency-free, in-memory backend that *really*
                           runs toy ``pytest`` tasks (a CPU self-repair bed) so
                           the full RL loop can be exercised without Docker.
-- ``DockerBackend``     : runs each instance in the official SWE-bench evaluation
-                          image (stub: wire to your harness).
-- ``R2EGymBackend``     : real integration with the R2E-Gym executor
+- ``DockerBackend``     : optional Docker evaluation harness (stub: wire to yours).
+- ``R2EGymBackend``     : optional integration with the R2E-Gym executor
                           (``r2egym`` + Docker); the container is the source of
                           truth and grading uses ``compute_reward``.
 
 Pick the stack with a single ``env.swebench.benchmark`` preset (``local`` /
-``swe_bench_verified`` / ``swe_bench_lite`` / ``r2e_gym_subset`` /
+``apps_train_coderl`` / ``swe_bench_verified`` / ``swe_bench_lite`` /
+``r2e_gym_subset`` /
 ``r2e_gym_lite``), which resolves the dataset + backend together (see
 :func:`resolve_benchmark`). Use ``benchmark=custom`` to drive the raw
 ``dataset_name`` / ``split`` / ``backend`` fields directly.
@@ -1470,7 +1471,7 @@ def load_instances(cfg: Dict[str, Any]) -> List[Dict[str, Any]]:
 
 
 def _normalize_instance(ex: Dict[str, Any]) -> Dict[str, Any]:
-    """Map a raw SWE-bench / R2E-Gym row to the fields this env needs.
+    """Map a raw coding-dataset / R2E-Gym row to the fields this env needs.
 
     The full original row is preserved under ``_raw`` so container backends
     (e.g. R2E-Gym, which does ``EnvArgs(ds=row)``) get every field they need.
@@ -1604,7 +1605,7 @@ EXEC_HIDDEN_SUITE_MSG = (
 
 
 class SWEBenchSingleEnv:
-    """Hosts one SWE-bench instance with a working-copy file map."""
+    """Hosts one coding instance with a working-copy file map."""
 
     def __init__(self, cfg: Dict[str, Any]):
         self.cfg = cfg or {}
@@ -1647,7 +1648,8 @@ class SWEBenchSingleEnv:
         info = {"instance_id": instance["instance_id"], "won": False,
                 "problem_statement": ps,
                 "available_actions": ["edit", "execute_bash", "finish"],
-                "difficulty": instance.get("difficulty", "unknown")}
+                "difficulty": instance.get("difficulty", "unknown"),
+                "anchor": self._build_anchor_state()}
         return self._build_repo_view(), info
 
     def _graded_partial_reward(self, info: Dict[str, Any]) -> float:
@@ -1766,6 +1768,7 @@ class SWEBenchSingleEnv:
             reward = (reward + terminal) if self.step_reward_coef > 0 else terminal
             info["won"] = won
 
+        info["anchor"] = self._build_anchor_state()
         return self._build_obs(), reward, done, info
 
     # ------------------------------------------------------------------ #
@@ -1776,6 +1779,13 @@ class SWEBenchSingleEnv:
 
     def _build_obs(self) -> str:
         return f"Observation: {self.last_output}\n"
+
+    def _build_anchor_state(self) -> str:
+        """Workspace file map as GiGPO step-state (no history / prompt wrapper)."""
+        if not self.files:
+            return ""
+        parts = [f"===== {path} =====\n{self.files[path]}" for path in sorted(self.files)]
+        return "\n".join(parts)
 
     def close(self) -> None:
         self.backend.close()
@@ -1806,8 +1816,8 @@ class SWEBenchMultiProcessEnv:
     """Vectorized, Ray-based wrapper hosting ``env_num * group_n`` instances.
 
     Group semantics mirror the rest of verl-agent: the ``group_n`` sub-envs in a
-    group are reset to the *same* SWE-bench instance, which is exactly the set of
-    rollouts DIDPO groups snippets across.
+    group are reset to the *same* coding instance, which is the set of rollouts
+    GRPO / GiGPO / DiDPO group across.
     """
 
     def __init__(self, cfg: Dict[str, Any], env_num: int, group_n: int,
@@ -1839,7 +1849,7 @@ class SWEBenchMultiProcessEnv:
         else:
             self.instances = load_instances(self.cfg)
             self._all_instances = self.instances
-        assert len(self.instances) > 0, "No SWE-bench instances loaded."
+        assert len(self.instances) > 0, "No coding instances loaded."
 
         rpw = resources_per_worker or {}
         worker_cls = _SWEBenchWorker.options(**rpw) if ray is not None else None
