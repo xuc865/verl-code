@@ -40,7 +40,7 @@ benchmarks:
 
 datasets:
   sft_hf_link: https://huggingface.co/datasets/xuc865/DiDPO-SFT-Data
-  rl_hf_link: https://huggingface.co/datasets/PRIME-RL/Eurus-2-SFT-Data
+  rl_hf_link: https://huggingface.co/datasets/PRIME-RL/Eurus-2-RL-Data
   internal_sft_path: TODO_FILL_ME_INTERNAL_SFT_DATA_PATH
   internal_rl_path: TODO_FILL_ME_INTERNAL_RL_DATA_PATH
 

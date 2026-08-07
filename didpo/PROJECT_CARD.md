@@ -60,7 +60,7 @@
 下面这些链接请你后续手动补：
 
 - **SFT 数据 HF 链接：** [xuc865/DiDPO-SFT-Data](https://huggingface.co/datasets/xuc865/DiDPO-SFT-Data)
-- **RL 数据 / benchmark HF 链接：** [PRIME-RL/Eurus-2-SFT-Data](https://huggingface.co/datasets/PRIME-RL/Eurus-2-SFT-Data)
+- **RL 数据 / benchmark HF 链接：** [PRIME-RL/Eurus-2-RL-Data](https://huggingface.co/datasets/PRIME-RL/Eurus-2-RL-Data)
 
 也可以补内部路径：
 

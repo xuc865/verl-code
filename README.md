@@ -98,7 +98,7 @@ bash scripts/launch_didpo_coderl_sft_mt8.sh
 ## 📦 Data
 
 - **SFT dataset (HF):** [xuc865/DiDPO-SFT-Data](https://huggingface.co/datasets/xuc865/DiDPO-SFT-Data)
-- **RL dataset (HF):** [PRIME-RL/Eurus-2-SFT-Data](https://huggingface.co/datasets/PRIME-RL/Eurus-2-SFT-Data)
+- **RL dataset (HF):** [PRIME-RL/Eurus-2-RL-Data](https://huggingface.co/datasets/PRIME-RL/Eurus-2-RL-Data)
 
 The default SFT data directory used by the launchers is:
 
