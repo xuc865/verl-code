@@ -82,8 +82,8 @@ bash scripts/launch_didpo_coderl_sft_mt8.sh
 
 ## Dataset
 
-- **SFT dataset (HF):** `TODO_FILL_ME_SFT_DATASET_HF_LINK`
-- **RL dataset (HF):** `TODO_FILL_ME_RL_DATASET_HF_LINK`
+- **SFT dataset (HF):** [xuc865/DiDPO-SFT-Data](https://huggingface.co/datasets/xuc865/DiDPO-SFT-Data)
+- **RL dataset (HF):** [PRIME-RL/Eurus-2-SFT-Data](https://huggingface.co/datasets/PRIME-RL/Eurus-2-SFT-Data)
 
 ---
 

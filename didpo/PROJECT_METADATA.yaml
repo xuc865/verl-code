@@ -1,0 +1,73 @@
+name: DiDPO for Multi-turn CodeRL
+slug: didpo-coderl
+short_name: DiDPO
+status: active
+language: en
+primary_domain: coding-agents
+summary: >
+  A practical SFT-to-RL training stack for multi-turn coding agents, featuring
+  Diff-in-Diff Policy Optimization (DiDPO) for snippet-level credit assignment
+  on code-editing trajectories.
+description: >
+  This project builds supervised fine-tuning and reinforcement-learning
+  workflows for multi-turn code-repair agents. It supports SFT on collected
+  coding trajectories and RL training with GRPO or DiDPO on CodeRL-style
+  benchmarks such as apps_train_coderl.
+
+highlights:
+  - Multi-turn coding-agent training
+  - SFT to RL workflow
+  - DiDPO snippet-level credit assignment
+  - APPS / CodeRL-style self-repair environment
+  - Qwen2.5-Coder-7B and Qwen3.5-4B recipes
+
+algorithms:
+  primary:
+    - didpo
+  baselines:
+    - grpo
+    - gspo
+    - dapo
+
+models:
+  - name: Qwen2.5-Coder-7B-Instruct
+    role: base_and_sft
+  - name: Qwen3.5-4B
+    role: base_and_sft
+
+benchmarks:
+  - apps_train_coderl
+
+datasets:
+  sft_hf_link: https://huggingface.co/datasets/xuc865/DiDPO-SFT-Data
+  rl_hf_link: https://huggingface.co/datasets/PRIME-RL/Eurus-2-SFT-Data
+  internal_sft_path: TODO_FILL_ME_INTERNAL_SFT_DATA_PATH
+  internal_rl_path: TODO_FILL_ME_INTERNAL_RL_DATA_PATH
+
+entrypoints:
+  data_prep:
+    - scripts/build_apps_mt8_sft_dataset.sh
+    - scripts/inject_think_into_sft_transcripts.py
+  sft:
+    - examples/sft/apps_mt8/run_apps_mt8_sft.sh
+    - examples/sft/apps_mt8/run_apps_mt8_sft_qwen35_4b.sh
+  rl:
+    - scripts/launch_didpo_coderl_sft_mt8.sh
+    - scripts/launch_didpo_coderl_sft_mt8_resume20.sh
+    - scripts/launch_grpo_coderl_sft_mt8.sh
+    - scripts/launch_grpo_coderl_qwen35_4b_sft_mt8.sh
+
+artifacts:
+  logs: logs/
+  sft_checkpoints: checkpoints/apps_mt8_sft_*
+  rl_checkpoints: checkpoints/<project>/<exp>/global_step_*
+  didpo_group_dumps: logs/didpo_groups/
+  swanlab_logs: swanlog/
+
+path_mapping:
+  train_machine_prefix: /mnt/z4/solariewang
+  dev_machine_prefix: /apdcephfs/z4/solariewang
+
+maintainer_notes:
+  - Commands in docs default to the training-machine path convention.
+  - Fill dataset placeholders before external release.

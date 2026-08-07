@@ -1,6 +1,15 @@
 <h1 align="center">verl-code</h1>
 
 <p align="center">
+  <a href=""><img src="https://img.shields.io/badge/arXiv-TBD-b31b1b.svg" alt="arXiv"></a>
+  <a href="https://github.com/xuc865/verl-code"><img src="https://img.shields.io/badge/GitHub-xuc865%2Fverl--code-181717?logo=github" alt="GitHub"></a>
+  <a href="https://github.com/xuc865/verl-code/blob/main/LICENSE"><img src="https://img.shields.io/badge/License-Apache%202.0-green.svg" alt="License"></a>
+  <a href="https://github.com/xuc865/verl-code/issues"><img src="https://img.shields.io/github/issues/xuc865/verl-code" alt="Issues"></a>
+  <a href="https://github.com/xuc865/verl-code/stargazers"><img src="https://img.shields.io/github/stars/xuc865/verl-code" alt="Stars"></a>
+  <a href="https://huggingface.co/datasets/xuc865/DiDPO-SFT-Data"><img src="https://img.shields.io/badge/%F0%9F%A4%97%20HF-SFT%20Data-yellow" alt="HF SFT Data"></a>
+</p>
+
+<p align="center">
   <img src="docs/main.png" alt="DiDPO" width="720">
 </p>
 
@@ -89,8 +98,8 @@ bash scripts/launch_didpo_coderl_sft_mt8.sh
 
 ## 📦 Data
 
-- **SFT dataset (HF):** `TODO_FILL_ME_SFT_DATASET_HF_LINK`
-- **RL dataset (HF):** `TODO_FILL_ME_RL_DATASET_HF_LINK`
+- **SFT dataset (HF):** [xuc865/DiDPO-SFT-Data](https://huggingface.co/datasets/xuc865/DiDPO-SFT-Data)
+- **RL dataset (HF):** [PRIME-RL/Eurus-2-SFT-Data](https://huggingface.co/datasets/PRIME-RL/Eurus-2-SFT-Data)
 
 The default SFT data directory used by the launchers is:
 
