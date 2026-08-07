@@ -1,7 +1,7 @@
 <h1 align="center">verl-code</h1>
 
 <p align="center">
-  <img src="docs/main.png" alt="DiDPO" width="920">
+  <img src="docs/main.png" alt="DiDPO" width="720">
 </p>
 
 <h3 align="center">
