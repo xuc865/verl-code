@@ -219,9 +219,7 @@ Quick start on training host:
 Hook into existing API eval:
   # Eval from training host (or any host with igate to this node):
   #   API_BASE=http://29.163.228.59:80/v1
-  #   bash scripts/eval_api_qwen25_coder_7b_pure.sh      # st1 exec
-  #   bash scripts/eval_api_qwen25_coder_7b_cot.sh       # mt12 + thinking
-  #   bash scripts/eval_api_qwen25_coder_7b_codeact.sh   # mt12_exec
+  #   python3 scripts/eval_api_baseline.py ...
 EOF
 }
 

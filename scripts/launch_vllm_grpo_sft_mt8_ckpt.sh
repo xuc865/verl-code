@@ -256,7 +256,7 @@ Train host:
 
 Eval against this API:
   API_BASE=http://127.0.0.1:8000/v1 MODEL=${SERVED_MODEL_NAME} \\
-    bash $REPO/scripts/eval_api_qwen25_coder_7b_pure.sh
+    python3 $REPO/scripts/eval_api_baseline.py --help
 EOF
 }
 

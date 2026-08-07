@@ -193,7 +193,7 @@ verl-code/
 ├── agent_system/      # multi-turn coding environment
 ├── didpo/             # DiDPO algorithm and docs
 ├── examples/          # SFT / RL recipe entrypoints
-├── scripts/           # launchers, data prep, eval scripts
+├── scripts/           # core launchers, data prep, eval, swanlab sync
 ├── logs/              # logs and collected trajectory files
 ├── checkpoints/       # SFT and RL checkpoints
 └── verl/              # training/runtime backend
